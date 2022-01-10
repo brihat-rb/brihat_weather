@@ -1,5 +1,5 @@
 ### Weather
-##### Go [here](https://brihat-rb.github.io/weather/weather.html)
+##### Go [here](https://weather.brihatrb.com.np/)
 
 #### Available Information
 - Weather Icon (from [OpenWeather](https://openweathermap.org))
