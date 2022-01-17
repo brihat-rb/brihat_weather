@@ -98,22 +98,22 @@
     <div id="footer">&spades; <a href="https://brihatrb.com.np/">Brihat</a> &spades;</div>
 
     <script>
-      var request = new XMLHttpRequest();
-      url = 'https://ipinfo.io/?token=6630ba13ce995d';
-      request.open('GET', url, true);
-      request.onload = function() {
-        response = JSON.parse(this.response);
-        document.getElementById("user_ip").innerHTML = response["ip"];
-        document.getElementById("user_geolocation").innerHTML = response["loc"];
-      }
-      request.send();
-	    
-//       function recordData (response) {
-// 	document.getElementById("user_ip").innerHTML = response["ip"];
+//       var request = new XMLHttpRequest();
+//       url = 'https://ipinfo.io/?token=6630ba13ce995d';
+//       request.open('GET', url, true);
+//       request.onload = function() {
+//         response = JSON.parse(this.response);
+//         document.getElementById("user_ip").innerHTML = response["ip"];
 //         document.getElementById("user_geolocation").innerHTML = response["loc"];
 //       }
+//       request.send();
+	    
+      function recordData (response) {
+	document.getElementById("user_ip").innerHTML = response["ip"];
+        document.getElementById("user_geolocation").innerHTML = response["loc"];
+      }
     </script>
-<!--     <script src="https://ipinfo.io/json?callback=recordData"></script> -->
+    <script src="https://ipinfo.io/json?callback=recordData&token=6630ba13ce995d"></script>
 
     <script type="text/javascript" src="./weather.js"></script>
     <script type="text/javascript" src="./weatherforecast.js"></script>
