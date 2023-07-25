@@ -25,6 +25,11 @@
         <br class="wide_screen">
         <button id="btn" onclick="get_weather();">Go</button>
         <button id="btnforecast" onclick="forecast();">Forecast</button><br />
+        <div id="current_position_buttons">
+          <button id="btn_current_pos_weather" onclick="get_current_weather();">Go Current Position</button>
+          <br id="hide" />
+          <button id="btn_current_default" onclick="set_current_as_default();">Save Current Position </button>
+        </div>
         <span id="info"></span>
       </div>
       <div id="weather_info">
@@ -118,7 +123,7 @@
     <script type="text/javascript" src="./weather.js"></script>
     <script type="text/javascript" src="./weatherforecast.js"></script>
     <script type="text/javascript" src="./pollution.js"></script>
-    <script type="text/javascript" src="./app_info.js"></script>
+    <!-- <script type="text/javascript" src="./app_info.js"></script> -->
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163547186-2"></script>

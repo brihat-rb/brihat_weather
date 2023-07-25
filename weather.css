@@ -233,6 +233,35 @@ button:hover {
   width: 70px;
 }
 
+#current_position_buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1px;
+}
+
+#btn_current_pos_weather {
+  width: 48%;
+  border-color: orangered;
+  color: orangered;
+}
+
+#btn_current_pos_weather:hover {
+  background-color: orangered;
+  color: white;
+}
+
+#btn_current_default {
+  width: 48%;
+  border-color: darkblue;
+  color: darkblue;
+}
+
+#btn_current_default:hover {
+  background-color: darkblue;
+  color: white;
+}
+
 #footer {
   text-align: center;
   font-family: monospace;
@@ -534,6 +563,22 @@ hr {
     margin: 0 auto;
   }
 
+  #current_position_buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: space-between; */
+  }
+
+  #btn_current_pos_weather, #btn_current_default {
+    width: 150px;
+  }
+
+  #btn_current_pos_weather {
+    margin-bottom: 1px;
+  }
+
   #wide {
     float: left;
     width: 40%;
@@ -615,6 +660,23 @@ hr {
     /* padding: 50px; */
     text-align: center;
   }
+
+  #current_position_buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: space-between; */
+  }
+
+  #btn_current_pos_weather, #btn_current_default {
+    width: 150px;
+  }
+
+  #btn_current_pos_weather {
+    margin-bottom: 1px;
+  }
+
 }
 
 @media only screen and (max-height: 350px) {

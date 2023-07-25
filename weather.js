@@ -1,6 +1,13 @@
 let TIMEZONE = "20700";
 let current_lat = 27.6833;
 let current_lon = 85.4167;
+let current_city = localStorage.getItem("current_city");
+
+if(current_city == "") {
+  current_city = "Bhaktapur";
+  localStorage.setItem("current_city", "Bhaktapur");
+
+}
 
 function update_weather() {
   document.getElementById("weather_icon").src = "./loading.svg";
@@ -20,16 +27,59 @@ function update_weather() {
 
 const XID = "fd9e3b47c747";
 
-function get_weather() {
+function setPosition(position) {
+  let url = 'https://api.openweathermap.org/data/2.5/weather?lat=' + position.coords.latitude;
+  url += '&lon=' + position.coords.longitude + '&appid=' + AID + UID + XID + '&mode=' + MODE + '&units=metric';
+  
+  let request = new XMLHttpRequest();
+  request.open('GET', url, false);
+
+  request.onload = function() {
+    let weather_data = JSON.parse(this.response);
+    localStorage.current_city = weather_data.name;
+    console.info("Current Location: ", weather_data.name);
+  };
+
+  request.onerror = function() {
+    console.log("No Update due to N/W Error on " + new Date());
+  };
+
+  // Send request
+  request.send();
+}
+
+function onerror() {
+  console.error("ERROR ON GETTING LOCATION INFO");
+}
+
+const options = {enableHighAccuracy: true};
+
+function update_city() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(setPosition, onerror, options);
+  } else {
+    console.log("Geolocation is not supported by this browser.");
+  }
+}
+
+function get_weather(city = "") {
   document.getElementById("weather_icon").src = "./loading.svg";
   let fields = ["location", "weather_main", "temp", "feels_like", "min_temp", "max_temp", "rain", "snow", "pressure", "humidity", "sunrise", "sunset", "wind", "last_update"];
   fields.forEach(item => document.getElementById(item).innerHTML = "<i class='load fa fa-refresh' aria-hidden='true'></i>");
 
   document.getElementById("info").innerHTML = "loading ...";
   document.getElementById("info").style = "display: block;";
-  let city_name = document.getElementById("city").value;
-  if(!city_name) {
-    city_name = "Bhaktapur";
+  let city_name = "";
+  if (city != "") {
+    city_name = city;
+    update_city();
+  }
+  else {
+    city_name = document.getElementById("city").value;
+    if(!city_name) {
+      city_name = "Bhaktapur";
+    }
+    localStorage.saved_city = city_name;
   }
 
   // Create a request variable and assign a new XMLHttpRequest object to it.
@@ -43,8 +93,15 @@ function get_weather() {
     // Begin accessing JSON data here
     let weather_data = JSON.parse(this.response);
     if(weather_data.cod == 200) {
-      current_lat = weather_data.coord.lat;
-      current_lon = weather_data.coord.lon;
+      if(city == "") {
+        localStorage.saved_city = weather_data.name;
+        localStorage.saved_lat = weather_data.coord.lat;
+        localStorage.saved_lon = weather_data.coord.lon;
+      }
+      else {
+        localStorage.current_city = city;
+      }
+      
       document.getElementById("info").style = "display: none;";
       document.getElementById("location").innerHTML = weather_data.name + " (" + weather_data.sys.country + ")";
       document.getElementById("weather_icon").src = "https://openweathermap.org/img/wn/" + weather_data.weather[0].icon + "@2x.png";
@@ -139,9 +196,22 @@ function get_weather() {
 
   // Send request
   request.send();
-  localStorage.saved_city = city_name;
-  localStorage.saved_lat = current_lat;
-  localStorage.saved_lon = current_lon;
+}
+
+function get_current_weather() {
+  let here = localStorage.current_city;
+  if (current_city == "") {
+    update_city();
+    get_weather();
+  }
+  else {
+    get_weather(here);
+  }
+}
+
+function set_current_as_default(){
+  localStorage.saved_city = localStorage.current_city;
+  get_weather(localStorage.current_city);
 }
 
 // for topmost date display
@@ -162,7 +232,7 @@ const SID = "ff4d7ebd93";
 
 let saved_city = localStorage.getItem("saved_city");
 if(!saved_city) {
-  document.getElementById("city").value = "Bhaktapur";
+  update_city();
 }
 else {
   document.getElementById("city").value = saved_city;
