@@ -97,6 +97,8 @@ function get_weather(city = "") {
         localStorage.saved_city = weather_data.name;
         localStorage.saved_lat = weather_data.coord.lat;
         localStorage.saved_lon = weather_data.coord.lon;
+        current_lat = weather_data.coord.lat;
+        current_lon = weather_data.coord.lon;
       }
       else {
         localStorage.current_city = city;
